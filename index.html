@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style media="screen">
+      body {
+        margin: 0;
+        -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+           -khtml-user-select: none; /* Konqueror HTML */
+             -moz-user-select: none; /* Firefox */
+              -ms-user-select: none; /* Internet Explorer/Edge */
+                  user-select: none; /* Non-prefixed version, currently
+                                        supported by Chrome and Opera */
+      }
+      canvas {
+        position: fixed;
+        top: 0;
+        z-index: 1;
+      }
+      .progressbar {
+        position: fixed;
+        width: 100vw;
+        height: 5px;
+      }
+      .progressZ {
+        background: #f55;
+      }
+      .progressH {
+        background: #55f;
+        left: 10px;
+      }
+      .resetBtn {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0);
+        transition: all 0.2s ease-in-out;
+        z-index: 2;
+      }
+      .resetImg {
+        position: fixed;
+        height: 200px;
+        width: 200px;
+        margin: 50vh 50vw;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progressbar progressZ"></div>
+    <div class="progressbar progressH"></div>
+    <canvas></canvas>
+    <div class="resetBtn">
+      <img src="restart.svg" class="resetImg">
+    </div>
+  </body>
+  <script src="canvas.js"></script>
+</html>
