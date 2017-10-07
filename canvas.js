@@ -27,8 +27,6 @@ window.addEventListener('mouseup', function() {
     zombie(mouse.x, mouse.y)
   } else {
     init();
-    resetBtn.style.background = 'rgba(0,0,0,0)';
-    resetImg.style.opacity = 0;
   }
 })
 
@@ -148,6 +146,9 @@ function init() {
     var y = Math.random()*(innerHeight-2*r)+r;
     human(x, y);
   }
+
+  resetBtn.style.background = 'rgba(0,0,0,0)';
+  resetImg.style.opacity = 0;
 }
 
 function animate() {
