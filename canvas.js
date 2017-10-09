@@ -5,6 +5,9 @@ var ph = 0.3;
 var chaseError = 0.7;
 
 var humanPop = 1000;
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ humanPop = 100;
+}
 var r = 5;
 var sightR = 100;
 var fightR = 5;
