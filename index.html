@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Zombie Apocalypse</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style media="screen">
       body {
@@ -48,6 +49,24 @@
         transform: translate(-50%, -50%);
         opacity: 0;
       }
+      .instruction {
+        position: fixed;
+        margin: 50vh 50vw;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        text-transform: capitalize;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 32px;
+        transition: all 0.2s ease-in-out;
+        color: #555;
+        z-index: 3;
+        background: rgba(255,255,255,0.9);
+        cursor: default;
+        padding: 20px;
+      }
+      .instruction.hidden {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
@@ -56,6 +75,9 @@
     <canvas></canvas>
     <div class="resetBtn">
       <img src="restart.svg" class="resetImg">
+    </div>
+    <div class="instruction">
+      click anywhere
     </div>
   </body>
   <script src="canvas.js"></script>

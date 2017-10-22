@@ -21,11 +21,15 @@ var progressZ = document.querySelector('.progressZ');
 var progressH = document.querySelector('.progressH');
 var resetBtn = document.querySelector('.resetBtn');
 var resetImg = document.querySelector('.resetImg');
+var instruction = document.querySelector('.instruction');
 
 var mouse = {x: undefined, y: undefined, state: 'up'}
 window.addEventListener('mousemove', function(event) {mouse.x = event.x; mouse.y = event.y})
 window.addEventListener('resize', init)
 window.addEventListener('mouseup', function() {
+  if (!instruction.classList.contains('hidden')) {
+    instruction.classList.add('hidden');
+  }
   if (humanArray.length > 0) {
     zombie(mouse.x, mouse.y)
   } else {
