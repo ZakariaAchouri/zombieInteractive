@@ -52,20 +52,30 @@
       .instruction {
         position: fixed;
         margin: 50vh 50vw;
-        transform: translate(-50%, -50%);
         text-align: center;
         text-transform: capitalize;
         font-family: 'Open Sans', sans-serif;
-        font-size: 32px;
+        font-size: 28px;
         transition: all 0.2s ease-in-out;
-        color: #555;
+        color: #fff;
         z-index: 3;
-        background: rgba(255,255,255,0.9);
+        background: #333;
+        height: 190px;
+        width: 190px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
         cursor: default;
-        padding: 20px;
+      }
+      .instruction:hover {
+        opacity: 0.8;
       }
       .instruction.hidden {
         opacity: 0;
+      }
+      .instruction-text {
+        width: 150px;
+        margin: 50% auto;
+        transform: translateY(-55%);
       }
     </style>
   </head>
@@ -77,7 +87,9 @@
       <img src="restart.svg" class="resetImg">
     </div>
     <div class="instruction">
-      click anywhere
+      <div class="instruction-text">
+        click anywhere
+      </div>
     </div>
   </body>
   <script src="canvas.js"></script>
