@@ -4,32 +4,35 @@ var pz = 0.7;
 var ph = 0.3;
 var chaseError = 0.7;
 
-var humanPop = 1000;
+var initialHumanPop = 1000;
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  humanPop = 100;
 }
 var r = 5;
 var sightR = 100;
 var fightR = 5;
-var margin = 5;
-
 
 ///////////// INTERNAL /////////////
-var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
-var progressZ = document.querySelector('.progressZ');
-var progressH = document.querySelector('.progressH');
-var resetBtn = document.querySelector('.resetBtn');
-var resetImg = document.querySelector('.resetImg');
-var instruction = document.querySelector('.instruction');
+function $(x) {return document.querySelector(x);}
 
-var mouse = {x: undefined, y: undefined, state: 'up'}
+var humanPop = initialHumanPop;
+var canvas = $('canvas');
+var c = canvas.getContext('2d');
+var graph = $('#graph');
+
+
+var humanPopArr = [initialHumanPop];
+var zombiePopArr = [0];
+
+var graphContainer = d3.select("#graph");
+var margin = {top: 100, right: 100, bottom: 100, left: 100};
+var width, height;
+var isGraphOpened = false;
+
+var mouse = {x: innerWidth/2, y: innerHeight/2, state: 'up'}
 window.addEventListener('mousemove', function(event) {mouse.x = event.x; mouse.y = event.y})
 window.addEventListener('resize', init)
-window.addEventListener('mouseup', function() {
-  if (!instruction.classList.contains('hidden')) {
-    instruction.classList.add('hidden');
-  }
+canvas.addEventListener('mouseup', function() {
   if (humanArray.length > 0) {
     zombie(mouse.x, mouse.y)
   } else {
@@ -37,8 +40,17 @@ window.addEventListener('mouseup', function() {
   }
 })
 
+var graphToggleBtn = $('#graphToggleBtn');
+graphToggleBtn.addEventListener('click', function() {
+  if (isGraphOpened) {
+    openCanvas();
+  } else {
+    openGraph();
+  }
+})
+
 // find Euclidean distance squared between points a, b
-function dist2(a,b) {return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y)}
+function dist2(a,b) {return (a.x-b.x)**2 + (a.y-b.y)**2}
 
 // general point displaying class function for human and zombie
 function Point(x, y, speed, prob, type, enemyArray, color) {
@@ -52,7 +64,7 @@ function Point(x, y, speed, prob, type, enemyArray, color) {
   this.closestDistance = undefined;
   this.probability = prob;
   this.isDead = false;
-  this.type = type;
+  this.type = type;     // 'human' or 'zombie'
   this.enemyArray = enemyArray;
 
   this.draw = function() {
@@ -84,7 +96,7 @@ function zombie(x, y) {zombieArray.push(new Point(x, y, zSpeed, pz, 'zombie', hu
 function wall(that) {
   if (that.x-r<0) that.x=r;
   if (that.x+r>innerWidth) that.x = innerWidth-r;
-  if (that.y-r<margin) that.y=r+margin;
+  if (that.y-r<0) that.y=r;
   if (that.y+r>innerHeight) that.y = innerHeight-r;
 }
 
@@ -147,15 +159,23 @@ function init() {
 
   humanArray = [];
   zombieArray = [];
+  humanPopArr = [initialHumanPop];
+  zombiePopArr = [0];
 
-  for (var i=0; i<humanPop; i++) {
+  for (var i=0; i<initialHumanPop; i++) {
     var x = Math.random()*(innerWidth-2*r)+r;
     var y = Math.random()*(innerHeight-2*r)+r;
     human(x, y);
   }
 
-  resetBtn.style.background = 'rgba(0,0,0,0)';
-  resetImg.style.opacity = 0;
+  // Set the dimensions of the canvas / graph
+  width = innerWidth - margin.left - margin.right;
+  height = innerHeight - margin.top - margin.bottom;
+
+  // resize svg graph containers
+  graphContainer
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
 }
 
 function animate() {
@@ -168,13 +188,75 @@ function animate() {
   for (var i=0; i<zombieArray.length; i++) applyKill(zombieArray[i], i, 'zombie')
   for (var i=0; i<humanArray.length; i++) applyKill(humanArray[i], i, 'human')
 
-  progressH.style.left = (zombieArray.length/(zombieArray.length+humanArray.length)*100) + 'vw';
+  humanPop = humanArray.length;
+  zombiePop = zombieArray.length;
+  if (humanPop > 0 && zombiePop > 0) {
+    humanPopArr.push(humanArray.length);
+    zombiePopArr.push(zombieArray.length);
+  }
 
-  if (humanArray.length==0) {
-    resetBtn.style.background = 'rgba(0,0,0,0.5)';
-    resetImg.style.opacity = 0.5;
+  if (isGraphOpened && humanPop > 0) {
+    plotPop();
   }
 }
 
 init();
 animate();
+
+
+// plotting population arrays (humanPopArr and zombiePopArr)
+function plotPop() {
+  // clear graph
+  d3.selectAll("#graph > *").remove();
+
+  // shift graph according to margins
+  var svg = graphContainer.append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+  // Set the ranges
+  var x = d3.scaleLinear().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
+
+  // Define the line
+  var valueline = d3.line()
+    .x(function(d,i) { return x(i); })
+    .y(function(d) { return y(d); });
+
+  // Scale the range of the data
+  x.domain([0, humanPopArr.length-1]);
+  y.domain([0, humanPopArr[0]]);
+
+  // plot humanPopArr
+  svg.append("path")
+      .data([humanPopArr])
+      .attr("class", "line lineH")
+      .attr("d", valueline);
+  // plot zombiePopArr
+  svg.append("path")
+      .data([zombiePopArr])
+      .attr("class", "line lineZ")
+      .attr("d", valueline);
+
+  // Add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+  // Add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+}
+
+function openGraph() {
+  canvas.style.opacity = 0.2;
+  graph.style.opacity = 1;
+  graph.style.transform = 'scale(1)';
+  isGraphOpened = true;
+}
+
+function openCanvas() {
+  canvas.style.opacity = 1;
+  graph.style.opacity = 0;
+  graph.style.transform = 'scale(1.05)';
+  isGraphOpened = false;
+}

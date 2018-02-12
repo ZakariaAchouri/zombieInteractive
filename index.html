@@ -20,77 +20,45 @@
         position: fixed;
         top: 0;
         z-index: 1;
+        opacity: 1;
+        transition: all 0.2s ease;
       }
-      .progressbar {
+      .line {
+        fill: none;
+        stroke-width: 2px;
+      }
+      .lineZ {
+        stroke: #f33;
+      }
+      .lineH {
+        stroke: #35f;
+      }
+      #graph {
+        opacity: 0;
+        transform: scale(1.05);
+        transition: all 0.2s ease;
         position: fixed;
-        width: 100vw;
-        height: 5px;
       }
-      .progressZ {
-        background: #f55;
-      }
-      .progressH {
-        background: #55f;
-        left: 10px;
-      }
-      .resetBtn {
+      #graphToggleBtn {
         position: fixed;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0);
-        transition: all 0.2s ease-in-out;
         z-index: 2;
-      }
-      .resetImg {
-        position: fixed;
-        height: 200px;
-        width: 200px;
-        margin: 50vh 50vw;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-      }
-      .instruction {
-        position: fixed;
-        margin: 50vh 50vw;
-        text-align: center;
-        text-transform: capitalize;
-        font-family: 'Open Sans', sans-serif;
-        font-size: 28px;
-        transition: all 0.2s ease-in-out;
+        padding: 10px;
+        background: rgba(0,0,0,0.5);
+        font-family: 'Open Sans';
         color: #fff;
-        z-index: 3;
-        background: #333;
-        height: 190px;
-        width: 190px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        cursor: default;
+        cursor: pointer;
+        transition: all 0.2s ease;
       }
-      .instruction:hover {
-        opacity: 0.8;
-      }
-      .instruction.hidden {
-        opacity: 0;
-      }
-      .instruction-text {
-        width: 150px;
-        margin: 50% auto;
-        transform: translateY(-55%);
+      #graphToggleBtn:hover {
+        background: rgba(0,0,0,0.8);
       }
     </style>
   </head>
   <body>
-    <div class="progressbar progressZ"></div>
-    <div class="progressbar progressH"></div>
     <canvas></canvas>
-    <div class="resetBtn">
-      <img src="restart.svg" class="resetImg">
-    </div>
-    <div class="instruction">
-      <div class="instruction-text">
-        click anywhere
-      </div>
-    </div>
+    <svg id="graph"></svg>
+    <div id="graphToggleBtn">Toggle Graph</div>
   </body>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="canvas.js"></script>
 </html>
