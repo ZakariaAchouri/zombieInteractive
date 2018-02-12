@@ -28,7 +28,6 @@ var graphContainer = d3.select("#graph");
 var margin = {top: 100, right: 100, bottom: 100, left: 100};
 var width, height;
 var isGraphOpen = false;
-var wasGraphEverOpened = false;
 
 var mouse = {x: innerWidth/2, y: innerHeight/2, state: 'up'}
 window.addEventListener('mousemove', function(event) {mouse.x = event.x; mouse.y = event.y})
@@ -255,7 +254,6 @@ function openGraph() {
   graph.style.opacity = 1;
   graph.style.transform = 'scale(1)';
   isGraphOpen = true;
-  wasGraphEverOpened = true;
 }
 
 function openCanvas() {
