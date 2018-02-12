@@ -47,6 +47,7 @@ graphToggleBtn.addEventListener('click', function() {
     openCanvas();
   } else {
     openGraph();
+    plotPop();
   }
 })
 
@@ -197,8 +198,6 @@ function animate() {
   }
 
   if (isGraphOpen && humanPop > 0) {
-    plotPop();
-  } else if (humanPop == 0 && !wasGraphEverOpened) {
     plotPop();
   }
 }
