@@ -251,14 +251,12 @@ function plotPop() {
 
 function openGraph() {
   canvas.style.opacity = 0.2;
-  graph.style.opacity = 1;
-  graph.style.transform = 'scale(1)';
+  graph.classList.add('graph--open');
   isGraphOpen = true;
 }
 
 function openCanvas() {
   canvas.style.opacity = 1;
-  graph.style.opacity = 0;
-  graph.style.transform = 'scale(1.05)';
+  graph.classList.remove('graph--open');
   isGraphOpen = false;
 }

@@ -34,6 +34,10 @@ canvas {
   transition: all 0.2s ease;
   position: fixed;
 }
+#graph.graph--open {
+  opacity: 1;
+  transform: scale(1);
+}
 
 #graphToggleBtn {
   position: fixed;
