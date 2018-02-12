@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+canvas {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+.lineZ {
+  stroke: #f33;
+}
+.lineH {
+  stroke: #35f;
+}
+#graph {
+  opacity: 0;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+  position: fixed;
+}
+#graphToggleBtn {
+  position: fixed;
+  z-index: 2;
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  font-family: 'Open Sans';
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#graphToggleBtn:hover {
+  background: rgba(0,0,0,0.8);
+}

@@ -27,7 +27,8 @@ var zombiePopArr = [0];
 var graphContainer = d3.select("#graph");
 var margin = {top: 100, right: 100, bottom: 100, left: 100};
 var width, height;
-var isGraphOpened = false;
+var isGraphOpen = false;
+var wasGraphEverOpened = false;
 
 var mouse = {x: innerWidth/2, y: innerHeight/2, state: 'up'}
 window.addEventListener('mousemove', function(event) {mouse.x = event.x; mouse.y = event.y})
@@ -42,7 +43,7 @@ canvas.addEventListener('mouseup', function() {
 
 var graphToggleBtn = $('#graphToggleBtn');
 graphToggleBtn.addEventListener('click', function() {
-  if (isGraphOpened) {
+  if (isGraphOpen) {
     openCanvas();
   } else {
     openGraph();
@@ -195,10 +196,13 @@ function animate() {
     zombiePopArr.push(zombieArray.length);
   }
 
-  if (isGraphOpened && humanPop > 0) {
+  if (isGraphOpen && humanPop > 0) {
+    plotPop();
+  } else if (humanPop == 0 && !wasGraphEverOpened) {
     plotPop();
   }
 }
+
 
 init();
 animate();
@@ -251,12 +255,13 @@ function openGraph() {
   canvas.style.opacity = 0.2;
   graph.style.opacity = 1;
   graph.style.transform = 'scale(1)';
-  isGraphOpened = true;
+  isGraphOpen = true;
+  wasGraphEverOpened = true;
 }
 
 function openCanvas() {
   canvas.style.opacity = 1;
   graph.style.opacity = 0;
   graph.style.transform = 'scale(1.05)';
-  isGraphOpened = false;
+  isGraphOpen = false;
 }
