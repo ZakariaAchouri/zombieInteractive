@@ -8,6 +8,7 @@ body {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
 canvas {
   position: fixed;
   top: 0;
@@ -15,6 +16,7 @@ canvas {
   opacity: 1;
   transition: all 0.2s ease;
 }
+
 .line {
   fill: none;
   stroke-width: 2px;
@@ -25,22 +27,43 @@ canvas {
 .lineH {
   stroke: #35f;
 }
+
 #graph {
   opacity: 0;
   transform: scale(1.05);
   transition: all 0.2s ease;
   position: fixed;
 }
+
 #graphToggleBtn {
   position: fixed;
   z-index: 2;
   padding: 10px;
   background: rgba(0,0,0,0.5);
-  font-family: 'Open Sans';
+  font-family: 'Open Sans', sans-serif;
   color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 #graphToggleBtn:hover {
   background: rgba(0,0,0,0.8);
+}
+
+a.view-in-github {
+  font-family: 'Open Sans', sans-serif;
+  position: fixed;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px 20px;
+  background: rgba(0,0,0,0.5);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+a.view-in-github:hover {
+  background: rgba(0,0,0,0.8);
+  color: #fff;
 }
