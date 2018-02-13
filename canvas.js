@@ -6,7 +6,7 @@ var chaseError = 0.7;
 
 var initialHumanPop = 1000;
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
- humanPop = 100;
+ initialHumanPop = 100;
 }
 var r = 5;
 var sightR = 100;
