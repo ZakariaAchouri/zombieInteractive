@@ -25,7 +25,7 @@ var humanPopArr = [initialHumanPop];
 var zombiePopArr = [0];
 
 var graphContainer = d3.select("#graph");
-var margin = {top: 50, right: 50, bottom: 50, left: 50};
+var margin = {top: 75, right: 50, bottom: 50, left: 50};
 var width, height;
 var isGraphOpen = false;
 
@@ -247,6 +247,25 @@ function plotPop() {
   // Add the Y Axis
   svg.append("g")
       .call(d3.axisLeft(y));
+
+  // text label for the x axis
+  svg.append("text")
+      .attr("class", "axis_label")
+      .attr("transform",
+            "translate(" + (width/2) + " ," +
+                           (height + 30) + ")")
+      .style("text-anchor", "middle")
+      .text("frame");
+
+  // text label for the y axis
+  svg.append("text")
+      .attr("class", "axis_label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("population");
 }
 
 function openGraph() {

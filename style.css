@@ -28,6 +28,11 @@ canvas {
   stroke: #35f;
 }
 
+.axis_label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
 #graph {
   opacity: 0;
   transform: scale(1.05);
